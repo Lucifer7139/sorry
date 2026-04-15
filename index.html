@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm so sorry...</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:       #e8637e;
+    --rose-dim:   #b04a61;
+    --rose-glow:  rgba(232, 99, 126, 0.18);
+    --bg:         #0d0810;
+    --surface:    #140f17;
+    --border:     #2e1e27;
+    --text:       #e8d8dd;
+    --text-muted: #7c5f68;
+    --text-soft:  #b09098;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* subtle radial glow behind card */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(180,50,80,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* starfield */
+  .star {
+    position: fixed;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+    animation: twinkle ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    50%       { opacity: 0.55; transform: scale(1); }
+  }
+
+  /* floating petals — darker tones */
+  .petal {
+    position: fixed;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+    pointer-events: none;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-40px) rotate(0deg); opacity: 0.5; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    max-width: 460px;
+    width: 90%;
+    padding: 56px 48px 48px;
+    text-align: center;
+    box-shadow:
+      0 0 0 1px rgba(232,99,126,0.06),
+      0 8px 48px rgba(0,0,0,0.6),
+      0 0 60px var(--rose-glow);
+    position: relative;
+    z-index: 1;
+    animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* top accent line */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 12%; right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    border-radius: 1px;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .seal {
+    width: 58px;
+    height: 58px;
+    background: linear-gradient(135deg, #9b2d47, #c0445e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 24px;
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(232,99,126,0.35); }
+    50%       { transform: scale(1.07); box-shadow: 0 0 0 14px rgba(232,99,126,0); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--rose);
+    line-height: 1.2;
+    margin-bottom: 8px;
+    text-shadow: 0 0 28px rgba(232,99,126,0.35);
+    animation: rise 0.9s 0.15s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    animation: rise 0.9s 0.25s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    animation: rise 0.9s 0.3s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider span { font-size: 14px; opacity: 0.6; }
+
+  p {
+    font-size: 0.97rem;
+    line-height: 1.9;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+    animation: rise 0.9s 0.35s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  p em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  p.closing {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.02rem;
+    color: var(--rose);
+    margin-bottom: 36px;
+    opacity: 0.9;
+    animation: rise 0.9s 0.45s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 38px;
+    background: transparent;
+    color: var(--rose);
+    border: 1px solid var(--rose-dim);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+    animation: rise 0.9s 0.55s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .btn:hover {
+    background: var(--rose-dim);
+    color: #fff;
+    box-shadow: 0 0 20px var(--rose-glow);
+    transform: translateY(-2px);
+  }
+
+  .note {
+    margin-top: 28px;
+    font-size: 0.73rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    animation: rise 0.9s 0.65s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  /* confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: burst 1s ease-out forwards;
+  }
+  @keyframes burst {
+    0%   { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<script>
+  // stars
+  for(let i = 0; i < 60; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random()*2;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}vw;
+      top:${Math.random()*100}vh;
+      animation-duration:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*5}s;
+    `;
+    document.body.appendChild(s);
+  }
+
+  // petals
+  const petalColors = ['#5c1e30','#7a2840','#3d1220','#8a3050'];
+  for(let i = 0; i < 16; i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 6 + Math.random()*9;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}vw;
+      background:${petalColors[Math.floor(Math.random()*petalColors.length)]};
+      animation-duration:${7+Math.random()*9}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    document.body.appendChild(p);
+  }
+</script>
+
+<div class="card">
+  <div class="seal">🤍</div>
+
+  <h1>I'm truly sorry.</h1>
+  <p class="sub">a sincere apology</p>
+
+  <div class="divider"><span>✦</span></div>
+
+  <p>
+    I know I shouldn't have said it — especially not like that,
+    in front of everyone. Your age is <em>yours</em> to share,
+    whenever you choose, with whoever you choose.
+  </p>
+
+  <p>
+    It wasn't my place. I slipped up, and I own that completely.
+    No excuses, no "buts" — just a genuine, heartfelt sorry.
+  </p>
+
+  <p class="closing">
+    "You are timeless in every way that matters — and I was foolish
+    to forget that even for a moment."
+  </p>
+
+  <button class="btn" id="forgiveBtn">I forgive you 🤍</button>
+
+  <p class="note">tap only when you mean it ✦</p>
+</div>
+
+<script>
+  const btn = document.getElementById('forgiveBtn');
+  btn.addEventListener('click', function(e){
+    const colors = ['#e8637e','#b04a61','#f2a0b0','#7a2840','#ffd6df'];
+    for(let i = 0; i < 32; i++){
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      const angle = Math.random()*2*Math.PI;
+      const dist = 80 + Math.random()*130;
+      c.style.setProperty('--tx', Math.cos(angle)*dist + 'px');
+      c.style.setProperty('--ty', Math.sin(angle)*dist + 'px');
+      c.style.left = e.clientX + 'px';
+      c.style.top  = e.clientY + 'px';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (0.7 + Math.random()*0.6) + 's';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 1400);
+    }
+    btn.textContent = '💗 All is forgiven';
+    btn.style.background = '#1a4d35';
+    btn.style.borderColor = '#2a7a55';
+    btn.style.color = '#5ecf90';
+    btn.style.boxShadow = '0 0 20px rgba(94,207,144,0.2)';
+    btn.disabled = true;
+  });
+</script>
+
+</body>
+</html>
